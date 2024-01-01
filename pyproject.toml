@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "platypus-bot"
+version = "0.1.0"
+description = ""
+authors = ["Patrik Kaura <patrikkaura@gmail.com>"]
+readme = "README.md"
+packages = [{include = "platypus_bot"}]
+
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.31.0"
+names = "^0.3.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.12.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

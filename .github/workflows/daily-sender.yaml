@@ -1,0 +1,31 @@
+name: "Daily sender"
+on:
+  schedule:
+  - cron: "0 9 * * *"
+#on: workflow_dispatch
+
+jobs:
+  sender:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+        poetry-version: ["1.4.2"]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: setup poetry
+        uses: packetcoders/action-setup-cache-python-poetry@main
+        with:
+          python-version: ${{ matrix.python-version }}
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: poetry run
+        env:
+          BOT_API_TOKEN: ${{ secrets.BOT_API_TOKEN }}
+          BOT_RECEIVER_ADDRESS: ${{ secrets.BOT_RECEIVER_ADDRESS }}
+        run: |
+          poetry run python main.py
